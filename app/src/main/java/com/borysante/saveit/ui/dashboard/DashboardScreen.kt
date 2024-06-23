@@ -62,7 +62,7 @@ fun DashboardTopBar(userName: String) {
         IconButton(onClick = { /* Handle profile click */ }) {
             Icon(Icons.Default.AccountCircle, contentDescription = "Profile")
         }
-    })
+    }, modifier = Modifier.padding(horizontal = 8.dp))
 }
 
 @Composable
