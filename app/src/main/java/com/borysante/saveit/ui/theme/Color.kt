@@ -20,3 +20,6 @@ val TextColor = Color(0xFF000000)
 val SecondaryTextColor = Color(0xFF757575)
 val OnPrimaryColor = Color(0xFFFFFFFF)
 val OnSecondaryColor = Color(0xFF000000)
+
+val FinancialGreen = Color(0xFFA3C9A8)
+val FinancialRed = Color(0xFFE6A8A8)
