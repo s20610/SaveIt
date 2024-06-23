@@ -11,6 +11,7 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val PrimaryColor = Color(0xFF1976D2)
+val PrimaryLightColor = Color(0xFF63A4FF)
 val SecondaryColor = Color(0xFFFFEB3B)
 val BackgroundColor = Color(0xFFFFFFFF)
 val SurfaceColor = Color(0xFFFAFAFA)
@@ -23,3 +24,5 @@ val OnSecondaryColor = Color(0xFF000000)
 
 val FinancialGreen = Color(0xFFA3C9A8)
 val FinancialRed = Color(0xFFE6A8A8)
+
+val chartVeryDarkGray = Color(0xFF2C2C2C)

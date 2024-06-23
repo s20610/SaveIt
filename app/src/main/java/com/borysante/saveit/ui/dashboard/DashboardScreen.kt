@@ -111,9 +111,7 @@ fun DashboardContent(innerPadding: PaddingValues, dashboardData: DashboardData) 
                 .padding(horizontal = 24.dp)
         ) {
             EarningExpensesCards(earnings, expenses)
-            Spacer(modifier = Modifier.height(26.dp))
-            ChartsSlider()
-            Spacer(modifier = Modifier.height(26.dp))
+            ChartsSlider(expenses = thisWeekExpenses)
             LastTransactionsList(transactions)
         }
     }

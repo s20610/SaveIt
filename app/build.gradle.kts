@@ -70,4 +70,7 @@ dependencies {
     //fonts
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.ui.text)
+
+    //charts library
+    implementation(libs.charts.android)
 }
