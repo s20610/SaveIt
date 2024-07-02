@@ -21,11 +21,8 @@ class AddTransactionActivity : EventBasedActivity<AddTransactionViewModel, AddTr
     @Composable
     override fun SetupContent() {
         val state by viewModel.transactionState.collectAsState()
-
         Scaffold(modifier = Modifier.fillMaxSize()) {
-            AddTransactionScreen(
-                state, ::passEventToViewModel
-            )
+            AddTransactionScreen(state = state, ::passEventToViewModel)
         }
     }
 
