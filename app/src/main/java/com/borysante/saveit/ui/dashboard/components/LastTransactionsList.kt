@@ -1,23 +1,10 @@
 package com.borysante.saveit.ui.dashboard.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,6 +13,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.borysante.saveit.data.dto.dashboard.Transaction
 import com.borysante.saveit.data.dto.dashboard.TransactionCategory
+import com.borysante.saveit.ui.components.ThemedText
+import androidx.compose.foundation.isSystemInDarkTheme
 
 @Composable
 fun LastTransactionsList(transactions: List<Transaction>) {
@@ -45,13 +34,13 @@ fun LastTransactionsListTopText() {
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text(
+        ThemedText(
             text = "Last Transactions",
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(top = 8.dp)
         )
         TextButton(onClick = { /* Handle view all click */ }) {
-            Text(text = "View All")
+            ThemedText(text = "View All")
         }
     }
 }
@@ -67,12 +56,17 @@ fun LastTransactionsLazyList(transactions: List<Transaction>) {
 
 @Composable
 fun TransactionItem(transaction: Transaction) {
+    val isDarkTheme = isSystemInDarkTheme()
+    val backgroundColor = if (isDarkTheme) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.background
+
     with(transaction) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp).clickable {  }
+                .padding(vertical = 8.dp)
+                .clickable { }
+                .background(backgroundColor)
         ) {
             TransactionCategoryIcon(category = category)
             Spacer(modifier = Modifier.width(16.dp))
@@ -111,8 +105,8 @@ fun RowScope.TransactionText(title: String, date: String) {
             .fillMaxHeight()
             .weight(1f)
     ) {
-        Text(text = title)
-        Text(text = date)
+        ThemedText(text = title)
+        ThemedText(text = date)
     }
 }
 
@@ -125,6 +119,6 @@ fun TransactionAmount(amount: String) {
             .fillMaxHeight()
             .padding(end = 8.dp)
     ) {
-        Text(text = amount)
+        ThemedText(text = amount)
     }
 }

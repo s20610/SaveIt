@@ -2,27 +2,26 @@ package com.borysante.saveit.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+object ColorProvider {
+    // Light theme colors
+    val PrimaryColor = Color(0xFF1976D2)
+    val SecondaryColor = Color(0xFFFFEB3B)
+    val BackgroundColor = Color(0xFFFFFFFF)
+    val SurfaceColor = Color(0xFFFAFAFA)
+    val ErrorColor = Color(0xFFF44336)
+    val TextColor = Color(0xFF000000)
+    val OnPrimaryColor = Color(0xFFFFFFFF)
+    val OnSecondaryColor = Color(0xFF000000)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+    val FinancialGreen = Color(0xFFA3C9A8)
+    val FinancialRed = Color(0xFFE6A8A8)
 
-val PrimaryColor = Color(0xFF1976D2)
-val PrimaryLightColor = Color(0xFF63A4FF)
-val SecondaryColor = Color(0xFFFFEB3B)
-val BackgroundColor = Color(0xFFFFFFFF)
-val SurfaceColor = Color(0xFFFAFAFA)
-val ErrorColor = Color(0xFFF44336)
-val SuccessColor = Color(0xFF4CAF50)
-val TextColor = Color(0xFF000000)
-val SecondaryTextColor = Color(0xFF757575)
-val OnPrimaryColor = Color(0xFFFFFFFF)
-val OnSecondaryColor = Color(0xFF000000)
+    val ChartVeryDarkGray = Color(0xFF2C2C2C)
 
-val FinancialGreen = Color(0xFFA3C9A8)
-val FinancialRed = Color(0xFFE6A8A8)
-
-val chartVeryDarkGray = Color(0xFF2C2C2C)
+    // Dark theme colors
+    val DarkBackgroundColor = Color(0xFF121212)
+    val DarkSurfaceColor = Color(0xFF1E1E1E)
+    val DarkTextColor = Color(0xFFFFFFFF)
+    val DarkFinancialGreen = Color(0xFF81C784) // Adjusted for dark mode
+    val DarkFinancialRed = Color(0xFFE57373) // Adjusted for dark mode
+}

@@ -10,23 +10,31 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
 
 private val LightColorScheme = lightColorScheme(
-    primary = PrimaryColor,
-    secondary = SecondaryColor,
-    background = BackgroundColor,
-    surface = SurfaceColor,
-    error = ErrorColor,
-    onPrimary = OnPrimaryColor,
-    onSecondary = OnSecondaryColor,
-    onBackground = TextColor,
-    onSurface = TextColor,
-    onError = OnPrimaryColor
+    primary = ColorProvider.PrimaryColor,
+    secondary = ColorProvider.SecondaryColor,
+    background = ColorProvider.BackgroundColor,
+    surface = ColorProvider.SurfaceColor,
+    error = ColorProvider.ErrorColor,
+    onPrimary = ColorProvider.OnPrimaryColor,
+    onSecondary = ColorProvider.OnSecondaryColor,
+    onBackground = ColorProvider.TextColor,
+    onSurface = ColorProvider.TextColor,
+    onError = ColorProvider.OnPrimaryColor
+)
+
+private val DarkColorScheme = darkColorScheme(
+    primary = ColorProvider.PrimaryColor,
+    secondary = ColorProvider.SecondaryColor,
+    background = ColorProvider.DarkBackgroundColor,
+    surface = ColorProvider.DarkSurfaceColor,
+    error = ColorProvider.ErrorColor,
+    onPrimary = ColorProvider.OnPrimaryColor,
+    onSecondary = ColorProvider.OnSecondaryColor,
+    onBackground = ColorProvider.DarkTextColor,
+    onSurface = ColorProvider.DarkTextColor,
+    onError = ColorProvider.OnPrimaryColor
 )
 
 @Composable

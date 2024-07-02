@@ -1,5 +1,6 @@
 package com.borysante.saveit.ui.dashboard.components
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,8 +9,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.borysante.saveit.data.dto.dashboard.weekDays
+import com.borysante.saveit.ui.theme.ColorProvider
 import com.hd.charts.StackedBarChartView
 import com.hd.charts.common.model.MultiChartDataSet
 import com.hd.charts.style.ChartViewDefaults
@@ -45,9 +48,7 @@ private fun ExpensesChart(expenses: List<Float>) {
 }
 
 @Composable
-fun chartColor() = listOf(
-    MaterialTheme.colorScheme.primary
-)
+fun chartColor(): List<Color> = listOf(MaterialTheme.colorScheme.primary)
 
 @Composable
 fun chartStyle() = StackedBarChartDefaults.style(
