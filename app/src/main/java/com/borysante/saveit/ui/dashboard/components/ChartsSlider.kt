@@ -1,6 +1,5 @@
 package com.borysante.saveit.ui.dashboard.components
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,8 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.borysante.saveit.data.dto.dashboard.weekDays
-import com.borysante.saveit.ui.theme.ColorProvider
+import com.borysante.saveit.ui.dashboard.weekDays
 import com.hd.charts.StackedBarChartView
 import com.hd.charts.common.model.MultiChartDataSet
 import com.hd.charts.style.ChartViewDefaults

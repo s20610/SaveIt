@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -25,26 +24,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.borysante.saveit.data.dto.dashboard.DashboardData
-import com.borysante.saveit.data.dto.dashboard.mockDashboardData
+import com.borysante.saveit.ui.dashboard.DashboardState.Companion.mockDashboardState
 import com.borysante.saveit.ui.dashboard.components.ChartsSlider
 import com.borysante.saveit.ui.dashboard.components.EarningExpensesCards
 import com.borysante.saveit.ui.dashboard.components.LastTransactionsList
 import com.borysante.saveit.ui.theme.SaveItTheme
 
 @Composable
-fun DashboardScreen(dashboardData: DashboardData) {
-    with(dashboardData) {
+fun DashboardScreen(state: DashboardState, onEvent: (DashboardEvent) -> Unit) {
+    with(state) {
         Scaffold(
             topBar = {
-                DashboardTopBar(userName)
+                DashboardTopBar(userName, onEvent)
             },
             bottomBar = {
-                DashboardBottomBar()
+                DashboardBottomBar(onEvent)
             },
             floatingActionButtonPosition = FabPosition.Center,
             content = { innerPadding ->
-                DashboardContent(innerPadding, dashboardData)
+                DashboardContent(innerPadding, state)
             },
         )
     }
@@ -52,21 +50,21 @@ fun DashboardScreen(dashboardData: DashboardData) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardTopBar(userName: String) {
+fun DashboardTopBar(userName: String, onEvent: (DashboardEvent) -> Unit) {
     TopAppBar(title = {
         Text(text = "Welcome, $userName")
     }, actions = {
-        IconButton(onClick = { /* Handle notifications */ }) {
+        IconButton(onClick = { onEvent(DashboardEvent.OnNotificationsClicked)}) {
             Icon(Icons.Default.Notifications, contentDescription = "Notifications")
         }
-        IconButton(onClick = { /* Handle profile click */ }) {
+        IconButton(onClick = { onEvent(DashboardEvent.OnProfileClicked)}) {
             Icon(Icons.Default.AccountCircle, contentDescription = "Profile")
         }
     }, modifier = Modifier.padding(horizontal = 8.dp))
 }
 
 @Composable
-fun DashboardBottomBar() {
+fun DashboardBottomBar(onEvent: (DashboardEvent) -> Unit) {
     BottomAppBar(
         actions = {
             Spacer(modifier = Modifier.weight(1f, true))
@@ -79,7 +77,7 @@ fun DashboardBottomBar() {
             }
             Spacer(modifier = Modifier.weight(1f, true))
             IconButton(
-                onClick = { /* Handle add new item */ },
+                onClick = { onEvent(DashboardEvent.OnAddTransactionClicked) },
             ) {
                 Icon(
                     Icons.Outlined.Add,
@@ -103,8 +101,8 @@ fun DashboardBottomBar() {
 }
 
 @Composable
-fun DashboardContent(innerPadding: PaddingValues, dashboardData: DashboardData) {
-    with(dashboardData) {
+fun DashboardContent(innerPadding: PaddingValues, dashboardState: DashboardState) {
+    with(dashboardState) {
         Column(
             modifier = Modifier
                 .padding(innerPadding)
@@ -122,7 +120,7 @@ fun DashboardContent(innerPadding: PaddingValues, dashboardData: DashboardData) 
 fun DashboardScreenPreview() {
     SaveItTheme {
         DashboardScreen(
-            mockDashboardData
+            mockDashboardState, onEvent =  {  }
         )
     }
 }
