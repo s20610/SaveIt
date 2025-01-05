@@ -92,4 +92,8 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    //Credential Manager Api
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services)
 }
