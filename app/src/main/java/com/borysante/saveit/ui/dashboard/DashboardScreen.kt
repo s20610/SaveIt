@@ -3,6 +3,7 @@ package com.borysante.saveit.ui.dashboard
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,6 +35,7 @@ import com.borysante.saveit.ui.theme.SaveItTheme
 fun DashboardScreen(state: DashboardState, onEvent: (DashboardEvent) -> Unit) {
     with(state) {
         Scaffold(
+            modifier = Modifier.fillMaxSize(),
             topBar = {
                 DashboardTopBar(userName, onEvent)
             },
@@ -54,10 +56,10 @@ fun DashboardTopBar(userName: String, onEvent: (DashboardEvent) -> Unit) {
     TopAppBar(title = {
         Text(text = "Welcome, $userName")
     }, actions = {
-        IconButton(onClick = { onEvent(DashboardEvent.OnNotificationsClicked)}) {
+        IconButton(onClick = { onEvent(DashboardEvent.OnNotificationsClicked) }) {
             Icon(Icons.Default.Notifications, contentDescription = "Notifications")
         }
-        IconButton(onClick = { onEvent(DashboardEvent.OnProfileClicked)}) {
+        IconButton(onClick = { onEvent(DashboardEvent.OnProfileClicked) }) {
             Icon(Icons.Default.AccountCircle, contentDescription = "Profile")
         }
     }, modifier = Modifier.padding(horizontal = 8.dp))
@@ -120,7 +122,7 @@ fun DashboardContent(innerPadding: PaddingValues, dashboardState: DashboardState
 fun DashboardScreenPreview() {
     SaveItTheme {
         DashboardScreen(
-            mockDashboardState, onEvent =  {  }
+            mockDashboardState, onEvent = { }
         )
     }
 }

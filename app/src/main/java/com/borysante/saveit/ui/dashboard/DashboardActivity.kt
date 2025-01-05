@@ -3,12 +3,9 @@ package com.borysante.saveit.ui.dashboard
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.borysante.saveit.ui.generic.events.EventBasedActivity
 import com.borysante.saveit.ui.transactions.add.AddTransactionActivity
@@ -27,9 +24,7 @@ class DashboardActivity : EventBasedActivity<DashboardViewModel, DashboardEvent>
     @Composable
     override fun SetupContent() {
         val state by viewModel.dashboardState.collectAsState()
-        Scaffold(modifier = Modifier.fillMaxSize()) {
-            DashboardScreen(state = state, ::passEventToViewModel)
-        }
+        DashboardScreen(state = state, ::passEventToViewModel)
     }
 
     override fun handleEvent(event: DashboardEvent) {
