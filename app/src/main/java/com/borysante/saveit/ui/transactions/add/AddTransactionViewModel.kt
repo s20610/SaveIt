@@ -6,6 +6,7 @@ import com.borysante.saveit.ui.generic.events.EventBasedViewModel
 import com.borysante.saveit.util.repository.TransactionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -16,7 +17,7 @@ class AddTransactionViewModel @Inject constructor(
     private val transactionRepository: TransactionRepository
 ) : EventBasedViewModel<AddTransactionEvent>() {
     private var state = MutableStateFlow(AddTransactionScreenState())
-    val transactionState = state
+    val transactionState = state.asStateFlow()
 
     fun onTitleChanged(title: String) {
         state.update {

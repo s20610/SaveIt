@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.0"
+agp = "8.7.3"
 coilCompose = "1.3.2"
 compose = "2.0.0-alpha.21"
 coreSplashscreen = "1.0.1"
@@ -7,21 +7,22 @@ hiltAndroid = "2.49"
 hiltAndroidGradlePlugin = "2.48"
 hiltNavigationCompose = "1.2.0"
 kotlin = "1.9.0"
-coreKtx = "1.13.1"
+coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.3"
-activityCompose = "1.9.0"
-composeBom = "2024.06.00"
-navigationCompose = "2.7.7"
-uiTextGoogleFonts = "1.6.8"
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.9.3"
+composeBom = "2024.12.01"
+navigationCompose = "2.8.5"
+uiTextGoogleFonts = "1.7.6"
 googleGmsGoogleServices = "4.4.2"
-firebaseFirestore = "25.0.0"
-firebaseAuth = "23.0.0"
-appcompat = "1.6.1"
-material = "1.10.0"
-firebaseFirestoreKtx = "25.0.0"
+firebaseFirestore = "25.1.1"
+firebaseAuth = "23.1.0"
+appcompat = "1.7.0"
+material = "1.12.0"
+firebaseFirestoreKtx = "25.1.1"
+ksp = "1.9.0-1.0.13"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -58,4 +59,4 @@ firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-fires
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
-
+ksp-plugin = { id = "com.google.devtools.ksp", version.ref = "ksp" }

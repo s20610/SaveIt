@@ -3,7 +3,6 @@ package com.borysante.saveit.ui.dashboard
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -16,7 +15,7 @@ import com.borysante.saveit.ui.transactions.add.AddTransactionActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DashboardActivity : EventBasedActivity<DashboardViewModel, DashboardEvent>(){
+class DashboardActivity : EventBasedActivity<DashboardViewModel, DashboardEvent>() {
     override val viewModel: DashboardViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +32,7 @@ class DashboardActivity : EventBasedActivity<DashboardViewModel, DashboardEvent>
         }
     }
 
-    override fun handleEvent(event: DashboardEvent){
+    override fun handleEvent(event: DashboardEvent) {
         when (event) {
             is DashboardEvent.OnAddTransactionClicked -> {
                 startActivity(AddTransactionActivity.prepareIntent(this))

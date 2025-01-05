@@ -10,11 +10,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class TransactionsModule {
+fun interface TransactionsModule {
 
     @Binds
     @Singleton
-    abstract fun bindTransactionRepository(
+    fun bindTransactionRepository(
         firestoreTransactionRepository: FirestoreTransactionRepository
     ): TransactionRepository
 }
