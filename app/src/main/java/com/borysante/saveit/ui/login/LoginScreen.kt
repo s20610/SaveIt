@@ -1,5 +1,9 @@
 package com.borysante.saveit.ui.login
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.InfiniteRepeatableSpec
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,13 +14,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -59,10 +67,7 @@ private fun LoginContent(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(R.mipmap.ic_launcher_foreground),
-                contentDescription = stringResource(R.string.app_icon),
-            )
+            RotatingImage(isLoading = state.isLoading)
             ThemedText(text = stringResource(R.string.welcome_to_saveit))
             ThemedText(text = stringResource(R.string.please_enter_your_details))
             Spacer(modifier = Modifier.height(8.dp))
@@ -132,10 +137,35 @@ private fun LoginContent(
     }
 }
 
+@Composable
+fun RotatingImage(isLoading: Boolean) {
+    val rotation = remember { Animatable(0f) }
+    LaunchedEffect(isLoading) {
+        if (isLoading) {
+            rotation.animateTo(
+                targetValue = 360f,
+                animationSpec = InfiniteRepeatableSpec(
+                    animation = tween(durationMillis = 1000),
+                    repeatMode = RepeatMode.Restart
+                )
+            )
+        } else {
+            rotation.snapTo(0f)
+        }
+    }
+    Image(
+        painter = painterResource(id = R.mipmap.ic_launcher_foreground),
+        contentDescription = "App icon",
+        modifier = Modifier
+            .graphicsLayer(rotationZ = rotation.value)
+            .wrapContentSize(Alignment.Center)
+    )
+}
+
 @Preview
 @Composable
 fun LoginScreenPreview() {
     SaveItTheme {
-        LoginScreen(state = LoginState(), onEvent = {})
+        LoginScreen(state = LoginState(isLoading = true), onEvent = {})
     }
 }
