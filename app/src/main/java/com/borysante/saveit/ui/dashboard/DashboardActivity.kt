@@ -1,6 +1,7 @@
 package com.borysante.saveit.ui.dashboard
 
-import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
@@ -20,7 +21,6 @@ class DashboardActivity : EventBasedActivity<DashboardViewModel, DashboardEvent>
         super.onCreate(savedInstanceState)
     }
 
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     override fun SetupContent() {
         val state by viewModel.dashboardState.collectAsState()
@@ -30,8 +30,15 @@ class DashboardActivity : EventBasedActivity<DashboardViewModel, DashboardEvent>
     override fun handleEvent(event: DashboardEvent) {
         when (event) {
             is DashboardEvent.OnAddTransactionClicked -> {
-                startActivity(AddTransactionActivity.prepareIntent(this))
+                navigateToAddTransaction()
             }
         }
+    }
+
+    private fun navigateToAddTransaction() =
+        startActivity(AddTransactionActivity.prepareIntent(this))
+
+    companion object {
+        fun prepareIntent(context: Context) = Intent(context, DashboardActivity::class.java)
     }
 }

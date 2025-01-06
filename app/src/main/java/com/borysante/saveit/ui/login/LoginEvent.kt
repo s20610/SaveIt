@@ -1,5 +1,6 @@
 package com.borysante.saveit.ui.login
 
+import com.borysante.saveit.data.auth.validation.LoginError
 import com.borysante.saveit.ui.generic.events.Event
 
 interface LoginEvent : Event {
@@ -12,4 +13,6 @@ interface LoginEvent : Event {
     data class OnPasswordChanged(val password: String) : LoginEvent
     data class OnPasswordVisibilityClicked(val visible: Boolean) : LoginEvent
     data object OnSignInWithGoogleClicked : LoginEvent
+    data class ShowErrorMessage(val error: LoginError) : LoginEvent
+    data object OnLoginSuccess : LoginEvent
 }

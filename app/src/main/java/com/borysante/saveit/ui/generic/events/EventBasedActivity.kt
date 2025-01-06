@@ -31,7 +31,7 @@ abstract class EventBasedActivity<V: EventBasedViewModel<E>, E: Event> : Compone
     abstract fun SetupContent()
 
     protected fun passEventToViewModel(event: E){
-        viewModel.onEvent(event)
+        viewModel.launchEvent(event)
     }
 
     private fun observeEvents() {

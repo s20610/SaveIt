@@ -1,8 +1,8 @@
-package com.borysante.saveit.data.dto.login.validation
+package com.borysante.saveit.data.auth.validation
 
-import com.borysante.saveit.data.dto.error.InputError
+import com.borysante.saveit.data.error.Error
 
-enum class LoginError(override val errorMessage: String) : InputError {
+enum class LoginError(override val errorMessage: String) : Error {
     EMPTY_EMAIL("Email cannot be empty"),
     EMPTY_PASSWORD("Password cannot be empty"),
     LOGIN_FAILED("Login failed"),

@@ -15,9 +15,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,6 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,9 +43,14 @@ import com.borysante.saveit.ui.components.ThemedText
 import com.borysante.saveit.ui.theme.SaveItTheme
 
 @Composable
-fun LoginScreen(state: LoginState, onEvent: (LoginEvent) -> Unit) {
+fun LoginScreen(
+    state: LoginState,
+    onEvent: (LoginEvent) -> Unit,
+    snackbarHostState: SnackbarHostState
+) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         content = { innerPadding ->
             LoginContent(
                 state = state,
@@ -72,18 +82,22 @@ private fun LoginContent(
             ThemedText(text = stringResource(R.string.please_enter_your_details))
             Spacer(modifier = Modifier.height(8.dp))
             ThemedOutlinedTextField(
-                value = state.email,
+                value = state.email ?: "",
                 onValueChange = { onEvent(LoginEvent.OnEmailChanged(it)) },
                 onFocusChange = { onEvent(LoginEvent.OnEmailFieldFocusChange(it)) },
-                label = { ThemedText(stringResource(R.string.title)) },
+                label = { ThemedText(stringResource(R.string.email)) },
                 error = state.emailError,
-                singleLine = true
+                singleLine = true,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next
+                ),
             )
             ThemedOutlinedTextField(
-                value = state.password,
+                value = state.password ?: "",
                 onValueChange = { onEvent(LoginEvent.OnPasswordChanged(it)) },
                 onFocusChange = { onEvent(LoginEvent.OnPasswordFieldFocusChange(it)) },
-                label = { ThemedText(stringResource(R.string.amount)) },
+                label = { ThemedText(stringResource(R.string.password)) },
                 trailingIcon = {
                     val visibilityIcon = if (!state.isPasswordVisible) {
                         R.drawable.outline_visibility_24
@@ -106,7 +120,11 @@ private fun LoginContent(
                     PasswordVisualTransformation()
                 },
                 error = state.passwordError,
-                singleLine = true
+                singleLine = true,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done
+                )
             )
             ThemedOutlinedButton(
                 modifier = Modifier.fillMaxWidth(0.5f),
@@ -166,6 +184,10 @@ fun RotatingImage(isLoading: Boolean) {
 @Composable
 fun LoginScreenPreview() {
     SaveItTheme {
-        LoginScreen(state = LoginState(isLoading = true), onEvent = {})
+        LoginScreen(
+            state = LoginState(isLoading = true),
+            onEvent = {},
+            snackbarHostState = SnackbarHostState()
+        )
     }
 }

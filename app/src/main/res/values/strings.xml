@@ -2,8 +2,8 @@
     <string name="app_name">SaveIt</string>
     <string name="welcome_to_saveit">Welcome to SaveIt!</string>
     <string name="please_enter_your_details">Please enter your details</string>
-    <string name="title">Title</string>
-    <string name="amount">Amount</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
     <string name="toggle_password_visibility">Toggle password visibility</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
