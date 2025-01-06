@@ -25,6 +25,9 @@
         </activity>
         <activity android:name=".ui.transactions.add.AddTransactionActivity"
             android:theme="@style/Theme.SaveIt"/>
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:theme="@style/Theme.SaveIt" />
     </application>
 
 </manifest>

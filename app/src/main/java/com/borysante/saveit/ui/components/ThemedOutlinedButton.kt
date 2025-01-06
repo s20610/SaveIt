@@ -23,24 +23,38 @@ fun ThemedOutlinedButton(
     contentPadding: PaddingValues = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
     textColor: Color? = null,
     backgroundColor: Color? = null,
-    disabled: Boolean = false
+    enabled: Boolean = true,
+    isProminent: Boolean = false
 ) {
-    val buttonTextColor = textColor ?: MaterialTheme.colorScheme.onSurfaceVariant
+    val buttonTextColor = when {
+        isProminent -> MaterialTheme.colorScheme.onPrimary
+        textColor != null -> textColor
+        else -> MaterialTheme.colorScheme.onSurfaceVariant
+    }
+
+    val disabledTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+    val disabledBackgroundColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.12f)
+    val prominentBackgroundColor = MaterialTheme.colorScheme.primary
 
     OutlinedButton(
         onClick = onClick,
         modifier = modifier,
         contentPadding = contentPadding,
-        enabled = !disabled,
+        enabled = enabled,
         colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = backgroundColor ?: Color.Transparent,
-            contentColor = buttonTextColor,
-            disabledContainerColor = Color.Transparent,
-            disabledContentColor = buttonTextColor
+            containerColor = if (isProminent) {
+                if (enabled) prominentBackgroundColor else disabledBackgroundColor
+            } else backgroundColor ?: Color.Transparent,
+            contentColor = if (enabled) buttonTextColor else disabledTextColor,
+            disabledContainerColor = if (isProminent) disabledBackgroundColor else Color.Transparent,
+            disabledContentColor = disabledTextColor
         ),
-        border = ButtonDefaults.outlinedButtonBorder(!disabled)
+        border = if (isProminent) null else ButtonDefaults.outlinedButtonBorder(enabled)
     ) {
-        ThemedText(text = text, color = buttonTextColor)
+        ThemedText(
+            text = text,
+            color = if (enabled) buttonTextColor else disabledTextColor
+        )
     }
 }
 
@@ -57,12 +71,12 @@ fun ThemedOutlinedButtonPreview() {
             ThemedOutlinedButton(
                 text = "Click Me",
                 onClick = { /* Handle click */ },
-                textColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                isProminent = true
             )
             ThemedOutlinedButton(
                 text = "Disabled Button",
                 onClick = { /* Handle click */ },
-                disabled = true,
+                enabled = false,
                 textColor = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }

@@ -30,18 +30,15 @@ class LoginActivity : EventBasedActivity<LoginViewModel, LoginEvent>() {
             }
 
             LoginEvent.OnRegisterClicked -> {
-
             }
 
             LoginEvent.OnSignInWithGoogleClicked -> {
-
             }
 
-            LoginEvent.OnEmailFieldClick -> {
-
+            is LoginEvent.OnEmailFieldFocusChange -> {
             }
 
-            LoginEvent.OnPasswordFieldClick -> {
+            is LoginEvent.OnPasswordFieldFocusChange -> {
 
             }
 

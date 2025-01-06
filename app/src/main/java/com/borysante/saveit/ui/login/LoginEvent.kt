@@ -3,8 +3,8 @@ package com.borysante.saveit.ui.login
 import com.borysante.saveit.ui.generic.events.Event
 
 interface LoginEvent : Event {
-    data object OnEmailFieldClick : LoginEvent
-    data object OnPasswordFieldClick : LoginEvent
+    data class OnEmailFieldFocusChange(val isFocus: Boolean) : LoginEvent
+    data class OnPasswordFieldFocusChange(val isFocus: Boolean) : LoginEvent
     data object OnLoginClicked : LoginEvent
     data object OnRegisterClicked : LoginEvent
     data object OnForgotPasswordClicked : LoginEvent
