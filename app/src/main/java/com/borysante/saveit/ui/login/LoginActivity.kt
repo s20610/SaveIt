@@ -1,5 +1,6 @@
 package com.borysante.saveit.ui.login
 
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -15,12 +16,12 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LoginActivity : EventBasedActivity<LoginViewModel, LoginEvent>() {
     override val viewModel: LoginViewModel by viewModels()
-    private lateinit var snackbarHostState: SnackbarHostState
 
     @Composable
     override fun SetupContent() {
         val state by viewModel.loginState.collectAsState()
-        snackbarHostState = remember { SnackbarHostState() }
+        //Temporary
+        navigateToDashboard()
         LoginScreen(state, ::passEventToViewModel, snackbarHostState)
     }
 

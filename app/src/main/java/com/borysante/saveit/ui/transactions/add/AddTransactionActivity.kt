@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.borysante.saveit.ui.generic.events.EventBasedActivity
@@ -18,38 +19,30 @@ class AddTransactionActivity : EventBasedActivity<AddTransactionViewModel, AddTr
     @Composable
     override fun SetupContent() {
         val state by viewModel.transactionState.collectAsState()
-        AddTransactionScreen(state = state, ::passEventToViewModel)
+        AddTransactionScreen(
+            state = state,
+            onEvent = viewModel::onEvent,
+            snackbarHostState = snackbarHostState,
+        )
+
+        LaunchedEffect(Unit) {
+            viewModel.events.collect { event ->
+                handleEvent(event)
+            }
+        }
     }
 
     override fun handleEvent(event: AddTransactionEvent) {
         when (event) {
             is AddTransactionEvent.ShowMessage -> {
-                // Display a snackbar with the message
-            }
-
-            is AddTransactionEvent.OnAddClicked -> {
-                viewModel.onAddClicked()
+                showSnackbar(event.message)
             }
 
             is AddTransactionEvent.OnCancelClicked -> {
-                onBackPressedDispatcher.onBackPressed()
+                finish()
             }
 
-            is AddTransactionEvent.OnDateClicked -> {
-                // Handle date selection event
-            }
-
-            is AddTransactionEvent.OnCategoryClicked -> {
-                // Handle category selection event
-            }
-
-            is AddTransactionEvent.OnTitleChanged -> {
-                viewModel.onTitleChanged(event.title)
-            }
-
-            is AddTransactionEvent.OnAmountChanged -> {
-                viewModel.onAmountChanged(event.amount)
-            }
+            else -> Unit
         }
     }
 

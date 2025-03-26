@@ -17,7 +17,7 @@ interface AuthProvider {
     suspend fun sendPasswordResetEmail(email: String): AuthenticationResult<Unit>
 
     suspend fun getCurrentUser(): User?
-    fun isLoggedIn(): Boolean
+    val isLoggedIn: Boolean
     suspend fun refreshToken(): String?
 
     object TokenExpired : Exception() {

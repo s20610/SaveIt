@@ -14,9 +14,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FirebaseAuthProvider @Inject constructor(
-    private val auth: FirebaseAuth,
-) : AuthProvider {
+class FirebaseAuthProvider @Inject constructor() : AuthProvider {
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
     override suspend fun signInWithEmailAndPassword(
         email: String,
         password: String
@@ -24,6 +24,7 @@ class FirebaseAuthProvider @Inject constructor(
         val authResult = auth.signInWithEmailAndPassword(email, password).await()
         val user = authResult.user
         if (user != null) {
+            auth.updateCurrentUser(user)
             ApiResult.Success(user.toUser())
         } else {
             ApiResult.Error(LoginError.LOGIN_FAILED)
@@ -65,7 +66,7 @@ class FirebaseAuthProvider @Inject constructor(
 
     override suspend fun getCurrentUser() = auth.currentUser?.toUser()
 
-    override fun isLoggedIn() = auth.currentUser != null
+    override val isLoggedIn get() = auth.currentUser != null
 
     override suspend fun refreshToken(): String? {
         val user = auth.currentUser ?: return null

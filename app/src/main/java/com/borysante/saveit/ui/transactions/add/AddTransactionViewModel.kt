@@ -1,6 +1,8 @@
 package com.borysante.saveit.ui.transactions.add
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.borysante.saveit.R
 import com.borysante.saveit.data.dto.transactions.Transaction
 import com.borysante.saveit.ui.generic.events.EventBasedViewModel
 import com.borysante.saveit.util.repository.TransactionRepository
@@ -9,55 +11,79 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.Date
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class AddTransactionViewModel @Inject constructor(
     private val transactionRepository: TransactionRepository
 ) : EventBasedViewModel<AddTransactionEvent>() {
-    private var state = MutableStateFlow(AddTransactionScreenState())
-    val transactionState = state.asStateFlow()
 
-    fun onTitleChanged(title: String) {
-        state.update {
-            it.copy(title = title)
+    private val _state = MutableStateFlow(AddTransactionScreenState())
+    val transactionState = _state.asStateFlow()
+
+    fun onEvent(event: AddTransactionEvent) { //Centralized event handling
+        when (event) {
+            is AddTransactionEvent.OnTitleChanged -> {
+                _state.update { it.copy(title = event.title) }
+            }
+
+            is AddTransactionEvent.OnAmountChanged -> {
+                _state.update { it.copy(amount = event.amount) }
+            }
+
+            is AddTransactionEvent.OnDateChanged -> {
+                _state.update { it.copy(date = event.date) }
+            }
+
+            is AddTransactionEvent.OnCategoryChanged -> {
+                _state.update { it.copy(category = event.category) }
+            }
+
+            is AddTransactionEvent.OnAddClicked -> {
+                addTransaction()
+            }
+
+            is AddTransactionEvent.OnCancelClicked -> {
+                launchEvent(AddTransactionEvent.OnCancelClicked) //Just emit the event, Activity will handle navigation
+            }
+
+            else -> {
+                launchEvent(AddTransactionEvent.ShowMessage("Unhandled event"))
+            }
         }
     }
 
-    fun onAmountChanged(amount: String) {
-        state.update {
-            it.copy(amount = amount)
-        }
-    }
+    private fun addTransaction() {
+        with(_state.value) {
+            if (title.isBlank() || amount.isBlank() || date == null || category == null) {
+                launchEvent(AddTransactionEvent.ShowMessage(context.getString(R.string.please_fill_all_fields)))
+                return
+            }
 
-    fun onDateClicked(date: Date) {
-        // Handle date selection logic if needed
-    }
-
-    fun onCategoryClicked() {
-        // Handle category selection logic if needed
-    }
-
-    fun onAddClicked() {
-        with(state.value){
             val transaction = Transaction(
-                id = "", // Generate or assign ID as needed
+                id = UUID.randomUUID().toString(),
                 title = title,
                 amount = amount.toFloat(),
-                date = Date(), // Example: Use current date or selected date
-                category = category // Example: Use selected category
+                date = date,
+                category = category
             )
 
             viewModelScope.launch {
                 try {
                     transactionRepository.addTransaction(transaction)
-                    _events.emit(AddTransactionEvent.ShowMessage("Transaction added successfully"))
-                    // Clear state after adding transaction if needed
+                    launchEvent(AddTransactionEvent.ShowMessage(context.getString(R.string.transaction_added_successfully)))
+                    clearState() // Clear the state after successful addition
+                    launchEvent(AddTransactionEvent.OnCancelClicked) //Navigate back
                 } catch (e: Exception) {
-                    _events.emit(AddTransactionEvent.ShowMessage("Failed to add transaction: ${e.message}"))
+                    Log.e("AddTransactionViewModel", "Error adding transaction", e)
+                    launchEvent(AddTransactionEvent.ShowMessage(context.getString(R.string.error_adding_transaction)))
                 }
             }
         }
+    }
+
+    private fun clearState() {
+        _state.update { AddTransactionScreenState() }
     }
 }

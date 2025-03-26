@@ -1,5 +1,7 @@
 package com.borysante.saveit.ui.login
 
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.borysante.saveit.data.auth.User
 import com.borysante.saveit.data.auth.validation.LoginError
@@ -112,7 +114,7 @@ class LoginViewModel @Inject constructor(
         state.update { it.copy(isLoading = isLoading) }
     }
 
-    private fun handleLoginSuccess(user: User) {
+    private fun handleLoginSuccess(user: User? = null) {
         toggleLoading(false)
         launchEvent(LoginEvent.OnLoginSuccess)
     }
