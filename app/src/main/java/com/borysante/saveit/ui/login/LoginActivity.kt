@@ -20,8 +20,6 @@ class LoginActivity : EventBasedActivity<LoginViewModel, LoginEvent>() {
     @Composable
     override fun SetupContent() {
         val state by viewModel.loginState.collectAsState()
-        //Temporary
-        navigateToDashboard()
         LoginScreen(state, ::passEventToViewModel, snackbarHostState)
     }
 

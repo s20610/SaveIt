@@ -35,6 +35,11 @@ class DashboardActivity : EventBasedActivity<DashboardViewModel, DashboardEvent>
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadTransactions()
+    }
+
     private fun navigateToAddTransaction() =
         startActivity(AddTransactionActivity.prepareIntent(this))
 

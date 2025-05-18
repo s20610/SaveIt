@@ -22,7 +22,7 @@ class AddTransactionViewModel @Inject constructor(
     private val _state = MutableStateFlow(AddTransactionScreenState())
     val transactionState = _state.asStateFlow()
 
-    fun onEvent(event: AddTransactionEvent) { //Centralized event handling
+    fun onEvent(event: AddTransactionEvent) {
         when (event) {
             is AddTransactionEvent.OnTitleChanged -> {
                 _state.update { it.copy(title = event.title) }
@@ -45,7 +45,7 @@ class AddTransactionViewModel @Inject constructor(
             }
 
             is AddTransactionEvent.OnCancelClicked -> {
-                launchEvent(AddTransactionEvent.OnCancelClicked) //Just emit the event, Activity will handle navigation
+                launchEvent(AddTransactionEvent.OnCancelClicked)
             }
 
             else -> {
@@ -64,7 +64,7 @@ class AddTransactionViewModel @Inject constructor(
             val transaction = Transaction(
                 id = UUID.randomUUID().toString(),
                 title = title,
-                amount = amount.toFloat(),
+                amount = prepareAmount(),
                 date = date,
                 category = category
             )
@@ -73,8 +73,7 @@ class AddTransactionViewModel @Inject constructor(
                 try {
                     transactionRepository.addTransaction(transaction)
                     launchEvent(AddTransactionEvent.ShowMessage(context.getString(R.string.transaction_added_successfully)))
-                    clearState() // Clear the state after successful addition
-                    launchEvent(AddTransactionEvent.OnCancelClicked) //Navigate back
+                    launchEvent(AddTransactionEvent.OnCancelClicked)
                 } catch (e: Exception) {
                     Log.e("AddTransactionViewModel", "Error adding transaction", e)
                     launchEvent(AddTransactionEvent.ShowMessage(context.getString(R.string.error_adding_transaction)))
@@ -83,7 +82,9 @@ class AddTransactionViewModel @Inject constructor(
         }
     }
 
-    private fun clearState() {
-        _state.update { AddTransactionScreenState() }
+    private fun AddTransactionScreenState.prepareAmount(): Float = if (category?.expense == true) {
+        -amount.toFloat()
+    } else {
+        amount.toFloat()
     }
 }

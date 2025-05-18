@@ -2,6 +2,7 @@ package com.borysante.saveit.ui.dashboard
 
 import com.borysante.saveit.data.dto.transactions.Transaction
 import com.borysante.saveit.data.dto.transactions.TransactionCategory
+import java.time.LocalDate
 import java.util.Date
 
 data class DashboardState(
@@ -22,21 +23,21 @@ data class DashboardState(
                     id = "1",
                     title = "Grocery",
                     amount = 70f,
-                    date = Date(),
+                    date = LocalDate.now(),
                     category = TransactionCategory.GROCERY
                 ),
                 Transaction(
                     id = "2",
                     title = "Food",
                     amount = 20f,
-                    date = Date(),
+                    date = LocalDate.now(),
                     category = TransactionCategory.FOOD
                 ),
                 Transaction(
                     id = "3",
                     title = "Income",
                     amount = 100f,
-                    date = Date(),
+                    date = LocalDate.now(),
                     category = TransactionCategory.INCOME
                 )
             )

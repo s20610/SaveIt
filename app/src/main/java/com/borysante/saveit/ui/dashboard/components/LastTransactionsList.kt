@@ -26,8 +26,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.borysante.saveit.data.dto.transactions.Transaction
-import com.borysante.saveit.ui.components.ThemedText
 import com.borysante.saveit.data.dto.transactions.TransactionCategory
+import com.borysante.saveit.ui.components.ThemedText
+import com.borysante.saveit.util.formatter.DateFormatter
 
 @Composable
 fun LastTransactionsList(transactions: List<Transaction>) {
@@ -36,12 +37,15 @@ fun LastTransactionsList(transactions: List<Transaction>) {
             .fillMaxWidth()
     ) {
         LastTransactionsListTopText()
-        LastTransactionsLazyList(transactions)
+        if (transactions.isEmpty()) {
+            EmptyListView()
+        }
+        LastTransactionsLazyList(transactions.take(TRANSACTION_LIST_ITEM_COUNT))
     }
 }
 
 @Composable
-fun LastTransactionsListTopText() {
+private fun LastTransactionsListTopText() {
     Row(
         verticalAlignment = Alignment.Top,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -59,7 +63,19 @@ fun LastTransactionsListTopText() {
 }
 
 @Composable
-fun LastTransactionsLazyList(transactions: List<Transaction>) {
+private fun EmptyListView() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        ThemedText(text = "No transactions found")
+        ThemedText(text = "Add some transactions to see them here")
+    }
+}
+
+@Composable
+private fun LastTransactionsLazyList(transactions: List<Transaction>) {
     LazyColumn {
         items(transactions.size, key = { it }) { index ->
             TransactionItem(transactions[index])
@@ -70,7 +86,8 @@ fun LastTransactionsLazyList(transactions: List<Transaction>) {
 @Composable
 fun TransactionItem(transaction: Transaction) {
     val isDarkTheme = isSystemInDarkTheme()
-    val backgroundColor = if (isDarkTheme) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.background
+    val backgroundColor =
+        if (isDarkTheme) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.background
 
     with(transaction) {
         Row(
@@ -83,7 +100,7 @@ fun TransactionItem(transaction: Transaction) {
         ) {
             TransactionCategoryIcon(category = category)
             Spacer(modifier = Modifier.width(16.dp))
-            TransactionText(title, date.toString())
+            TransactionText(title, DateFormatter.dateFormatter.format(date))
             Spacer(modifier = Modifier.weight(1f))
             TransactionAmount(amount.toString())
         }
@@ -135,3 +152,5 @@ fun TransactionAmount(amount: String) {
         ThemedText(text = amount)
     }
 }
+
+private const val TRANSACTION_LIST_ITEM_COUNT = 7

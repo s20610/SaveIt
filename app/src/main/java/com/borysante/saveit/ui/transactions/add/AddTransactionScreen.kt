@@ -46,9 +46,10 @@ import androidx.compose.ui.unit.dp
 import com.borysante.saveit.R
 import com.borysante.saveit.data.dto.transactions.TransactionCategory
 import com.borysante.saveit.ui.components.ThemedText
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.borysante.saveit.util.formatter.DateFormatter
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
 @Composable
 fun AddTransactionScreen(
@@ -137,14 +138,14 @@ fun AddTransactionContent(
 
 @Composable
 fun DateSelectionField(
-    selectedDate: Date?,
-    onDateSelected: (Date) -> Unit,
+    selectedDate: LocalDate?,
+    onDateSelected: (LocalDate) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var showDialog by remember { mutableStateOf(false) }
-    val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     val formattedDate =
-        selectedDate?.let { dateFormatter.format(it) } ?: stringResource(R.string.select_date)
+        selectedDate?.let { DateFormatter.dateFormatter.format(it) }
+            ?: stringResource(R.string.select_date)
 
     OutlinedTextField(
         value = formattedDate,
@@ -166,7 +167,10 @@ fun DateSelectionField(
         DatePickerModal(
             onDateSelected = { selectedMillis ->
                 if (selectedMillis != null) {
-                    onDateSelected(Date(selectedMillis))
+                    onDateSelected(
+                        Instant.ofEpochMilli(selectedMillis).atZone(ZoneId.systemDefault())
+                            .toLocalDate()
+                    )
                 }
             },
             onDismiss = { showDialog = false }
